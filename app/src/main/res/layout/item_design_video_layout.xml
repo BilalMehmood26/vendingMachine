@@ -11,7 +11,7 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/thumbnail_iv"
         android:layout_width="@dimen/_80sdp"
         android:layout_height="@dimen/_80sdp"
         android:src="@drawable/dummy_watch"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/title_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_semi_bold"
@@ -38,8 +38,8 @@
         android:textSize="@dimen/_13sdp"
         android:layout_marginStart="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toTopOf="@+id/imageView4" />
+        app:layout_constraintStart_toEndOf="@+id/thumbnail_iv"
+        app:layout_constraintTop_toTopOf="@+id/thumbnail_iv" />
 
     <TextView
         android:layout_width="0dp"
@@ -52,8 +52,8 @@
         android:layout_marginTop="@dimen/_7sdp"
         android:layout_marginStart="@dimen/_10sdp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toEndOf="@+id/thumbnail_iv"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -63,8 +63,8 @@
         android:background="@color/base2"
         android:gravity="center"
         android:layout_marginBottom="@dimen/_5sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintStart_toEndOf="@+id/imageView4">
+        app:layout_constraintBottom_toBottomOf="@+id/thumbnail_iv"
+        app:layout_constraintStart_toEndOf="@+id/thumbnail_iv">
 
         <ImageView
             android:layout_width="@dimen/_20sdp"
@@ -72,6 +72,7 @@
             android:src="@drawable/ic_play" />
 
         <TextView
+            android:id="@+id/duration_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_7sdp"

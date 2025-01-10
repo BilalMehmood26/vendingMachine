@@ -9,11 +9,13 @@
     android:layout_margin="@dimen/_5sdp">
 
     <ImageView
+        android:id="@+id/category_iv"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:src="@drawable/iv_category_dummy"/>
 
     <TextView
+        android:id="@+id/title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_semi_bold"
