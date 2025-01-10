@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "904974557339",
+    "project_id": "vending-machines-da703",
+    "storage_bucket": "vending-machines-da703.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904974557339:android:0c6296085935dffee9263e",
+        "android_client_info": {
+          "package_name": "com.buzzware.vendingmachinetech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhcZwhF-864BWuCX2f5NSV411MkpHkSUs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

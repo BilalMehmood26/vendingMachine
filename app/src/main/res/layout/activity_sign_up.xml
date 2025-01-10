@@ -58,45 +58,24 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:gravity="center"
-                android:text="Email Address"
+                android:text="Full Name"
                 android:textColor="@color/gray_100"
                 android:textSize="@dimen/_9sdp"
                 android:layout_marginTop="@dimen/_30sdp"/>
 
             <EditText
+                android:id="@+id/full_name_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="@dimen/_12sdp"
-                android:hint="info@gmail.com"
+                android:hint="Full Name"
+                android:inputType="textCapWords"
                 android:fontFamily="@font/montserrat_medium"
                 android:textSize="@dimen/_11sdp"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:singleLine="true"
                 android:imeOptions="actionNext"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:background="@color/white"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_semi_bold"
-                android:gravity="center"
-                android:text="Password"
-                android:textColor="@color/gray_100"
-                android:textSize="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_15sdp"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/_12sdp"
-                android:hint="Password"
-                android:fontFamily="@font/montserrat_medium"
-                android:textSize="@dimen/_11sdp"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:singleLine="true"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:imeOptions="actionNext"
                 android:background="@color/white"/>
 
             <TextView
@@ -110,16 +89,66 @@
                 android:layout_marginTop="@dimen/_15sdp"/>
 
             <EditText
+                android:id="@+id/email_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="@dimen/_12sdp"
                 android:hint="info@gmail.com"
+                android:inputType="textEmailAddress"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="@dimen/_11sdp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:singleLine="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:imeOptions="actionNext"
+                android:background="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:gravity="center"
+                android:text="Birthday"
+                android:textColor="@color/gray_100"
+                android:textSize="@dimen/_9sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/_12sdp"
+                android:hint="MM/DD/YYYY"
                 android:fontFamily="@font/montserrat_medium"
                 android:textSize="@dimen/_11sdp"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:singleLine="true"
                 android:imeOptions="actionNext"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:background="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_semi_bold"
+                android:gravity="center"
+                android:text="Phone Number"
+                android:textColor="@color/gray_100"
+                android:textSize="@dimen/_9sdp"
+                android:layout_marginTop="@dimen/_15sdp"/>
+
+            <EditText
+                android:id="@+id/phone_number_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/_12sdp"
+                android:hint="0000-0000-00"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="@dimen/_11sdp"
+                android:inputType="phone"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:singleLine="true"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:imeOptions="actionNext"
                 android:background="@color/white"/>
 
             <TextView
@@ -133,38 +162,17 @@
                 android:layout_marginTop="@dimen/_15sdp"/>
 
             <EditText
+                android:id="@+id/password_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="@dimen/_12sdp"
-                android:hint="Password"
+                android:hint="***********"
                 android:fontFamily="@font/montserrat_medium"
                 android:textSize="@dimen/_11sdp"
                 android:paddingHorizontal="@dimen/_10sdp"
+                android:inputType="textPassword"
                 android:singleLine="true"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:imeOptions="actionNext"
-                android:background="@color/white"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_semi_bold"
-                android:gravity="center"
-                android:text="Email Address"
-                android:textColor="@color/gray_100"
-                android:textSize="@dimen/_9sdp"
-                android:layout_marginTop="@dimen/_15sdp"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/_12sdp"
-                android:hint="info@gmail.com"
-                android:fontFamily="@font/montserrat_medium"
-                android:textSize="@dimen/_11sdp"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@color/white"/>
 
@@ -215,4 +223,13 @@
     </LinearLayout>
 
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

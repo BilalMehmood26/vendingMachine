@@ -48,12 +48,14 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/profile_iv"
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
             android:src="@drawable/dummy_profile"
             android:layout_marginTop="@dimen/_15sdp"/>
 
         <TextView
+            android:id="@+id/user_name_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semi_bold"
@@ -68,6 +70,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_semi_bold"
             android:gravity="center"
+            android:visibility="invisible"
             android:text="\@RonnieSalvio"
             android:layout_marginTop="@dimen/_5sdp"
             android:textColor="#F3F3F3"

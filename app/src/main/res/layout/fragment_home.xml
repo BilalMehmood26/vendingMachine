@@ -41,6 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/user_name_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/montserrat_medium"
@@ -49,6 +50,7 @@
                     android:textSize="@dimen/_16sdp" />
 
                 <TextView
+                    android:id="@+id/date_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"

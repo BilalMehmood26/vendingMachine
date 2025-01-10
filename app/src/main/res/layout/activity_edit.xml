@@ -42,6 +42,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/saveTV"
@@ -50,8 +51,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="@dimen/_100sdp"
@@ -59,6 +60,7 @@
                 android:layout_marginTop="@dimen/_20sdp">
 
                 <ImageView
+                    android:id="@+id/profile_iv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/dummy_profile"
@@ -68,10 +70,11 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
+                    android:id="@+id/add_iv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/iv_camera"
                     android:layout_margin="@dimen/_10sdp"
+                    android:src="@drawable/iv_camera"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -82,11 +85,11 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_20sdp"
                 android:background="@color/white"
-                android:layout_marginTop="@dimen/_20sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_12sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -101,15 +104,16 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
+                    android:id="@+id/first_name_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_semi_bold"
                     android:background="@android:color/transparent"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
                     android:text="Ronnie"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -119,48 +123,11 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/white"
-                android:layout_marginTop="@dimen/_10sdp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:gravity="center"
-                    android:text="Last Name"
-                    android:textColor="@color/gray_50"
-                    android:textSize="@dimen/_10sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_semi_bold"
-                    android:background="@android:color/transparent"
-                    android:text="Salvio"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_10sdp"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_12sdp"
-                android:layout_marginHorizontal="@dimen/_15sdp"
-                android:background="@color/white"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:paddingVertical="@dimen/_12sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -175,15 +142,16 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/email_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_semi_bold"
                     android:background="@android:color/transparent"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
                     android:text="RonnieSalvio@info.com"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -193,11 +161,11 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/white"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_12sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -212,15 +180,16 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
+                    android:id="@+id/phone_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_semi_bold"
                     android:background="@android:color/transparent"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
                     android:text="+98 765 4321 0"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -230,11 +199,11 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:paddingVertical="@dimen/_12sdp"
                 android:layout_marginHorizontal="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:background="@color/white"
-                android:layout_marginTop="@dimen/_10sdp">
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_12sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -249,16 +218,17 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
+                    android:id="@+id/password_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_semi_bold"
                     android:background="@android:color/transparent"
-                    android:text="Account Info"
+                    android:fontFamily="@font/montserrat_semi_bold"
+                    android:imeOptions="actionDone"
                     android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:text="Account Info"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_10sdp"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -285,5 +255,13 @@
         android:layout_marginHorizontal="@dimen/_15sdp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

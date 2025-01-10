@@ -65,6 +65,7 @@
                 android:layout_marginTop="@dimen/_30sdp"/>
 
             <EditText
+                android:id="@+id/email_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="@dimen/_12sdp"
@@ -88,17 +89,19 @@
                 android:layout_marginTop="@dimen/_15sdp"/>
 
             <EditText
+                android:id="@+id/password_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/_12sdp"
-                android:hint="Password"
-                android:fontFamily="@font/montserrat_medium"
-                android:textSize="@dimen/_11sdp"
-                android:paddingHorizontal="@dimen/_10sdp"
-                android:singleLine="true"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:imeOptions="actionNext"
-                android:background="@color/white"/>
+                android:background="@color/white"
+                android:fontFamily="@font/montserrat_medium"
+                android:hint="Password"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:paddingVertical="@dimen/_12sdp"
+                android:singleLine="true"
+                android:textSize="@dimen/_11sdp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -213,5 +216,15 @@
             android:fontFamily="@font/montserrat_medium"/>
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
