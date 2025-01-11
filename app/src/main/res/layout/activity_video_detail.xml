@@ -36,9 +36,9 @@
         <androidx.media3.ui.PlayerView
             android:id="@+id/exo_player_view"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_350sdp"
+            android:layout_height="@dimen/_240sdp"
             app:show_buffering="when_playing"
-            android:scaleType="fitXY"
+            app:resize_mode="fit"
             android:src="@drawable/dummy_watch"
             app:layout_constraintTop_toTopOf="parent" />
 

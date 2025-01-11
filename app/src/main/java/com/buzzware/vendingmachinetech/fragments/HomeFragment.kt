@@ -66,7 +66,19 @@ class HomeFragment : Fragment() {
             binding.progressBar.visibility = View.GONE
             videosList.clear()
             value!!.forEach {
-                val video = it.toObject(Videos::class.java)
+                val video = Videos(
+                    title = it.getString("title") ?: "",
+                    categoryId = it.getString("categoryId") ?: "",
+                    description = it.getString("description") ?: "",
+                    publishDate = it.getLong("publishDate") ?: 0,
+                    duration = it.getLong("duration") ?: 0,
+                    userId = it.getString("userId") ?: "",
+                    postId = it.getString("postId") ?: "",
+                    thumbnailImage = it.getString("thumbnailImage") ?: "",
+                    videoLink = it.getString("videoLink") ?: "",
+                    isFavorite = it.getBoolean("isFavorite") ?: false // Set the retrieved boolean value
+                )
+
                 videosList.add(video)
             }
             setAdapter()

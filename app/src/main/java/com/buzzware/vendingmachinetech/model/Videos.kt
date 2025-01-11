@@ -14,6 +14,7 @@ data class Videos(
     var postId: String = "",
     var thumbnailImage: String = "",
     var videoLink: String = "",
+    var isFavorite: Boolean = false
 ): Parcelable {
 
     // Constructor that creates the object from a Parcel
@@ -23,10 +24,11 @@ data class Videos(
         parcel.readString() ?: "",
         parcel.readLong(),
         parcel.readLong(),
+    parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.readString() ?: ""
+        parcel.readByte() != 0.toByte()
     )
 
     // Write object data to Parcel
@@ -40,6 +42,7 @@ data class Videos(
         parcel.writeString(postId)
         parcel.writeString(thumbnailImage)
         parcel.writeString(videoLink)
+        parcel.writeByte(if (isFavorite) 1 else 0)
     }
 
     // Describe the contents, typically 0 or 1 for file descriptors
