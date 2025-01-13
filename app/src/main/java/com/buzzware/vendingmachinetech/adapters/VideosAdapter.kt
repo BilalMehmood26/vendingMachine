@@ -12,6 +12,8 @@ import com.buzzware.vendingmachinetech.activities.VideoDetailActivity
 import com.buzzware.vendingmachinetech.databinding.ItemDesignCategoryLayoutBinding
 import com.buzzware.vendingmachinetech.databinding.ItemDesignVideoLayoutBinding
 import com.buzzware.vendingmachinetech.model.Videos
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -56,9 +58,11 @@ class VideosAdapter(val context: Context, val list: ArrayList<Videos>) :
             favouriteIv.setOnClickListener {
                 if (item.isFavorite) {
                     db.collection("Videos").document(item.postId).update("isFavorite", false)
+                    db.collection("Users").document(Firebase.auth.currentUser!!.uid).update("favorites", FieldValue.arrayRemove(item.postId))
                     favouriteIv.setImageResource(R.drawable.ic_heart_post)
                 } else {
                     db.collection("Videos").document(item.postId).update("isFavorite", true)
+                    db.collection("Users").document(Firebase.auth.currentUser!!.uid).update("favorites", FieldValue.arrayUnion(item.postId))
                     favouriteIv.setImageResource(R.drawable.ic_heart_post_fill)
                 }
             }

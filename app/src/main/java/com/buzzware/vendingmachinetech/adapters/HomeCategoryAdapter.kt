@@ -37,7 +37,10 @@ class HomeCategoryAdapter(val context: Context, val list: ArrayList<Category>)
         }
 
         holder.binding.root.setOnClickListener {
-            context.startActivity(Intent(context, CategoryDetailActivity::class.java).putExtra("title", "Category Name"))
+            context.startActivity(Intent(context, CategoryDetailActivity::class.java).apply{
+                putExtra("title", item.title)
+                putExtra("categoryID", item.id)
+            })
             (context as Activity).overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
         }
     }

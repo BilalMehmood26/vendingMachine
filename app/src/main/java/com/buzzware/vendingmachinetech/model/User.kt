@@ -14,7 +14,8 @@ data class User(
     var isPro: Boolean = false,
     var subscriptionType: String = "trail",
     var userType: String = "user",
-    var createdAt: Long? = 0
+    var createdAt: Long? = 0,
+    var favorites :ArrayList<String> = arrayListOf()
 )
 
 

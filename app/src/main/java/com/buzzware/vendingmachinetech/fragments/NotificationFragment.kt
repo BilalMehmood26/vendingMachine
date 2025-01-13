@@ -1,5 +1,6 @@
 package com.buzzware.vendingmachinetech.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.buzzware.vendingmachinetech.databinding.FragmentNotificationBinding
 
 class NotificationFragment : Fragment() {
 
+    private lateinit var fragmentContext: Context
     private val binding : FragmentNotificationBinding by lazy {
         FragmentNotificationBinding.inflate(layoutInflater)
     }
@@ -25,8 +27,12 @@ class NotificationFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        binding.notificationRV.layoutManager = LinearLayoutManager(requireActivity())
-        binding.notificationRV.adapter = NotificationAdapter(requireActivity(), arrayListOf())
+        binding.notificationRV.layoutManager = LinearLayoutManager(fragmentContext)
+        binding.notificationRV.adapter = NotificationAdapter(fragmentContext, arrayListOf())
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        fragmentContext = context
+    }
 }

@@ -52,8 +52,8 @@ class CategoryFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        binding.categoryRV.layoutManager = GridLayoutManager(requireActivity(), 3)
-        binding.categoryRV.adapter = CategoryAdapter(requireActivity(), categoryList)
+        binding.categoryRV.layoutManager = GridLayoutManager(fragmentContext, 3)
+        binding.categoryRV.adapter = CategoryAdapter(fragmentContext, categoryList)
     }
 
     override fun onAttach(context: Context) {

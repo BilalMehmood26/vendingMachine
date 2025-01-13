@@ -127,6 +127,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
         }
     }
+
 /*
 
     private fun userDetails(

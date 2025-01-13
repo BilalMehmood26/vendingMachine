@@ -40,12 +40,12 @@ class SettingFragment : Fragment() {
             }
         }
         binding.accountlayout.setOnClickListener {
-            startActivity(Intent(requireActivity(), EditActivity::class.java))
+            startActivity(Intent(fragmentContext, EditActivity::class.java))
             requireActivity().overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
         }
 
         binding.favouriteLayout.setOnClickListener {
-            startActivity(Intent(requireActivity(), CategoryDetailActivity::class.java).putExtra("title", "Favourites"))
+            startActivity(Intent(fragmentContext, CategoryDetailActivity::class.java).putExtra("title", "Favourites"))
             requireActivity().overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
         }
 

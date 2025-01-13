@@ -47,6 +47,7 @@ class EditActivity : BaseActivity() {
             firstNameTv.setText(UserSession.user.userName)
             emailTv.setText(UserSession.user.email)
             passwordTv.setText(UserSession.user.password)
+            phoneTv.setText(UserSession.user.phoneNumber)
             if (!UserSession.user.image.equals("")) {
                 Glide.with(this@EditActivity).load(UserSession.user.image).into(profileIv)
             }

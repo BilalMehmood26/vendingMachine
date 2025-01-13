@@ -3,6 +3,9 @@ package com.buzzware.vendingmachinetech.fragments
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore.Video
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +39,7 @@ class HomeFragment : Fragment() {
     private lateinit var fragmentContext: Context
     private val categoryList :ArrayList<Category> = arrayListOf()
     private val videosList :ArrayList<Videos> = arrayListOf()
+    private val filteredVideosList :ArrayList<Videos> = arrayListOf()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +51,25 @@ class HomeFragment : Fragment() {
             if(UserSession.user.image.isNotEmpty()){
                 Glide.with(fragmentContext).load(UserSession.user.image).into(profileIv)
             }
+
+            searchEt.addTextChangedListener(object :TextWatcher{
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    filteredVideosList.clear()
+                     videosList.forEach {
+                         if(it.title.lowercase().contains(p0!!)) filteredVideosList.add(it)
+                     }
+                    setAdapter(filteredVideosList)
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+            })
+
         }
         getCategoryList ()
         getVideos()
@@ -81,10 +104,11 @@ class HomeFragment : Fragment() {
 
                 videosList.add(video)
             }
-            setAdapter()
+            setAdapter(videosList)
 
         }
     }
+
     private fun getCategoryList (){
         Firebase.firestore.collection("Categories").addSnapshotListener { value, error ->
 
@@ -100,17 +124,19 @@ class HomeFragment : Fragment() {
                 val video = it.toObject(Category::class.java)
                 categoryList.add(video)
             }
+
             setCategory()
         }
     }
+
     private fun setCategory() {
-        binding.categoryRV.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-        binding.categoryRV.adapter = HomeCategoryAdapter(requireActivity(), categoryList)
+        binding.categoryRV.layoutManager = LinearLayoutManager(fragmentContext, LinearLayoutManager.HORIZONTAL, false)
+        binding.categoryRV.adapter = HomeCategoryAdapter(fragmentContext, categoryList)
     }
 
-    private fun setAdapter() {
-        binding.continueRV.layoutManager = LinearLayoutManager(requireActivity())
-        binding.continueRV.adapter = VideosAdapter(requireActivity(), videosList)
+    private fun setAdapter(videoList:ArrayList<Videos>) {
+        binding.continueRV.layoutManager = LinearLayoutManager(fragmentContext)
+        binding.continueRV.adapter = VideosAdapter(fragmentContext, videoList)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
