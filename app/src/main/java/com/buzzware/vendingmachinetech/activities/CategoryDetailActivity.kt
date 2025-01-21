@@ -90,7 +90,7 @@ class CategoryDetailActivity : BaseActivity() {
 
             binding.progressBar.visibility = View.GONE
             videosList.clear()
-
+            favoriteList.clear()
             value!!.forEach {
                 val categoryID = it.getString("categoryId") ?: ""
                 val postId = it.getString("postId") ?: ""
@@ -105,8 +105,7 @@ class CategoryDetailActivity : BaseActivity() {
                     postId = postId,
                     thumbnailImage = it.getString("thumbnailImage") ?: "",
                     videoLink = it.getString("videoLink") ?: "",
-                    isFavorite = it.getBoolean("isFavorite")
-                        ?: false // Set the retrieved boolean value
+                    isFavorite = it.getBoolean("isFavorite") ?: false
                 )
 
                 if (categoryID.equals(this.categoryID)) {

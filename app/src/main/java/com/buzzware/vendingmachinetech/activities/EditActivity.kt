@@ -25,7 +25,7 @@ class EditActivity : BaseActivity() {
         ActivityEditBinding.inflate(layoutInflater)
     }
 
-    lateinit var imageURI: Uri
+    private  var imageURI: Uri? = null
     private val mAuth = Firebase.auth
     private var db = Firebase.firestore
 

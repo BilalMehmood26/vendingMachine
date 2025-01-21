@@ -1,9 +1,16 @@
 package com.buzzware.vendingmachinetech.activities
 
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +18,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.buzzware.vendingmachinetech.R
 import com.buzzware.vendingmachinetech.databinding.ActivityLoginBinding
+import com.buzzware.vendingmachinetech.databinding.LayoutAlertForgotPasswordBinding
 import com.buzzware.vendingmachinetech.model.User
 import com.buzzware.vendingmachinetech.utils.LocationUtility
 import com.buzzware.vendingmachinetech.utils.UserSession
@@ -126,6 +134,38 @@ class LoginActivity : AppCompatActivity() {
             binding.progressBar.visibility = View.GONE
             Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showForgetDialog() {
+        val dialog = Dialog(this)
+        dialog.setCancelable(true)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val dialogBinding = LayoutAlertForgotPasswordBinding.inflate(LayoutInflater.from(this))
+        dialog.setContentView(dialogBinding.root)
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setGravity(Gravity.CENTER)
+
+        dialogBinding.submitTV.setOnClickListener {
+            val email = dialogBinding.emailET.text.toString()
+
+            if (email.isNotEmpty()){
+                auth.sendPasswordResetEmail(email)
+                    .addOnSuccessListener {
+                        Toast.makeText(this, "Please check you email", Toast.LENGTH_SHORT).show()
+                        dialog.dismiss()
+                    }.addOnFailureListener {
+                        Toast.makeText(this, "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                    }
+                Toast.makeText(this, "Please check you email", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }else{
+                Toast.makeText(this, "Email Required", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        dialog.show()
+
     }
 
 /*
