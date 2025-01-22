@@ -18,7 +18,7 @@ import com.google.firebase.ktx.Firebase
 
 class MainActivity : BaseActivity() {
 
-    private val binding : ActivityMainBinding by lazy {
+    private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
@@ -41,15 +41,22 @@ class MainActivity : BaseActivity() {
 
         binding.signUpTV.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
-            overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
+            overridePendingTransition(
+                androidx.appcompat.R.anim.abc_fade_in,
+                androidx.appcompat.R.anim.abc_fade_out
+            )
         }
 
         binding.signInTV.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
-            overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
+            overridePendingTransition(
+                androidx.appcompat.R.anim.abc_fade_in,
+                androidx.appcompat.R.anim.abc_fade_out
+            )
         }
 
     }
+
     override fun onStart() {
         super.onStart()
 
@@ -62,9 +69,16 @@ class MainActivity : BaseActivity() {
                     val user = task.toObject(User::class.java)
                     user!!.id = userId
                     UserSession.user = user
-                    val intent = Intent(this@MainActivity, DashBoardActivity::class.java)
-                    intent.putExtra("user","user")
-                    startActivity(intent)
+                    if (user.isPro) {
+                        val intent = Intent(this@MainActivity, DashBoardActivity::class.java)
+                        intent.putExtra("user", "user")
+                        startActivity(intent)
+                    } else {
+                        val intent = Intent(this@MainActivity, SubscriptionActivity::class.java)
+                        intent.putExtra("user", "user")
+                        startActivity(intent)
+                    }
+
                     finish()
                     overridePendingTransition(
                         androidx.appcompat.R.anim.abc_fade_in,

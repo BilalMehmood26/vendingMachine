@@ -72,7 +72,10 @@ class LoginActivity : AppCompatActivity() {
                     password.isEmpty() -> binding.passwordEt.error = "Required"
                     else -> login(email, password)
                 }
-                //
+            }
+
+            forgotPasswordTv.setOnClickListener {
+                showForgetDialog()
             }
         }
 
@@ -146,7 +149,7 @@ class LoginActivity : AppCompatActivity() {
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.window?.setGravity(Gravity.CENTER)
 
-        dialogBinding.submitTV.setOnClickListener {
+        dialogBinding.submitTv.setOnClickListener {
             val email = dialogBinding.emailET.text.toString()
 
             if (email.isNotEmpty()){

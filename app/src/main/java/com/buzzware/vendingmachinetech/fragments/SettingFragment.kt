@@ -14,6 +14,7 @@ import com.buzzware.vendingmachinetech.R
 import com.buzzware.vendingmachinetech.activities.CategoryDetailActivity
 import com.buzzware.vendingmachinetech.activities.EditActivity
 import com.buzzware.vendingmachinetech.activities.LoginActivity
+import com.buzzware.vendingmachinetech.activities.MainActivity
 import com.buzzware.vendingmachinetech.databinding.FragmentSettingBinding
 import com.buzzware.vendingmachinetech.utils.UserSession
 import com.google.firebase.auth.ktx.auth
@@ -47,7 +48,7 @@ class SettingFragment : Fragment() {
 
         binding.logoutBtn.setOnClickListener {
             Firebase.auth.signOut()
-            startActivity(Intent(fragmentContext, LoginActivity::class.java))
+            startActivity(Intent(fragmentContext, MainActivity::class.java))
             requireActivity().overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
             requireActivity().finish()
         }

@@ -8,6 +8,7 @@ data class User(
     var password: String = "",
     var image: String = "",
     var token: String = "",
+    var stripeCustid: String = "",
     var userLat: Double? = 0.0,
     var userLng: Double? = 0.0,
     var isActive: Boolean = true,

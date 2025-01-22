@@ -68,4 +68,9 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer.dash)
     implementation(libs.androidx.media3.ui)
 
+    implementation(libs.stripe.android)
+    implementation (libs.stripe.android.v20481)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
 }

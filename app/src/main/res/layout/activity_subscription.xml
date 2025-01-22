@@ -16,11 +16,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/light_bg"
+        android:visibility="invisible"
         android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginHorizontal="@dimen/_15sdp"/>
 
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_15sdp"
@@ -67,14 +69,14 @@
                 android:fontFamily="@font/montserrat_semi_bold"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:paddingVertical="@dimen/_3sdp"
-                android:text="TRAIL"
+                android:text="MONTHLY"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_9sdp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/monthly_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_7sdp"
@@ -96,7 +98,7 @@
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toStartOf="@+id/monthlyRadio"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
+                app:layout_constraintTop_toBottomOf="@+id/monthly_price" />
 
 
             <ImageView
@@ -133,7 +135,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView55"
+                android:id="@+id/annual_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_7sdp"
@@ -155,7 +157,7 @@
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintEnd_toStartOf="@+id/yearRadio"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView55" />
+                app:layout_constraintTop_toBottomOf="@+id/annual_tv" />
 
 
             <ImageView
@@ -182,5 +184,15 @@
             android:textSize="@dimen/_12sdp" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.buzzware.vendingmachinetech.activities
 
 import android.Manifest
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -21,10 +22,11 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import java.util.Calendar
 
 class SignUpActivity : AppCompatActivity() {
 
-    private val binding : ActivitySignUpBinding by lazy {
+    private val binding: ActivitySignUpBinding by lazy {
         ActivitySignUpBinding.inflate(layoutInflater)
     }
 
@@ -71,40 +73,70 @@ class SignUpActivity : AppCompatActivity() {
                 finish()
             }
 
+            dobTv.setOnClickListener {
+                val calendar = Calendar.getInstance()
+                val year = calendar.get(Calendar.YEAR)
+                val month = calendar.get(Calendar.MONTH)
+                val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+                val datePickerDialog = DatePickerDialog(
+                    this@SignUpActivity,
+                    { _, selectedYear, selectedMonth, selectedDay ->
+                        // Update the TextView with the selected date
+                        val date = "$selectedDay/${selectedMonth + 1}/$selectedYear"
+                        dobTv.text = date
+                    },
+                    year, month, day
+                )
+                datePickerDialog.show()
+            }
+
             getStartBtn.setOnClickListener {
                 val email = emailEt.text.toString()
                 val userName = fullNameEt.text.toString()
                 val password = passwordEt.text.toString()
                 val phoneNumber = phoneNumberEt.text.toString()
+                val dob = dobTv.text.toString()
 
                 when {
                     userName.isEmpty() -> fullNameEt.error = "Required"
                     email.isEmpty() -> emailEt.error = "Required"
                     password.isEmpty() -> passwordEt.error = "Required"
                     phoneNumber.isEmpty() -> phoneNumberEt.error = "Required"
-                    else -> signUp(userName, email, password,phoneNumber)
+                    dob.isEmpty() -> Toast.makeText(
+                        this@SignUpActivity,
+                        "Required",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    else -> signUp(userName, email, password, phoneNumber, dob)
                 }
-                //startActivity(Intent(this@SignUpActivity, DashboardActivity::class.java))
             }
         }
         binding.backIV.setOnClickListener { onBackPressed() }
-/*
-        binding.getStartBtn.setOnClickListener {
-            //startActivity(Intent(this, SubscriptionActivity::class.java))
-            overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
-        }*/
+        /*
+                binding.getStartBtn.setOnClickListener {
+                    //startActivity(Intent(this, SubscriptionActivity::class.java))
+                    overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
+                }*/
 
     }
 
-    private fun signUp(fullName: String, email: String, password: String,phoneNumber:String) {
+    private fun signUp(
+        fullName: String,
+        email: String,
+        password: String,
+        phoneNumber: String,
+        dob: String
+    ) {
         binding.progressBar.visibility = View.VISIBLE
         auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
             FirebaseMessaging.getInstance().token.addOnSuccessListener {
                 Log.d("LOGGER", "signUp: Token$it")
-                userDetails(fullName, email, password, it,phoneNumber)
+                userDetails(fullName, email, password, it, phoneNumber,dob)
             }.addOnFailureListener {
                 Toast.makeText(this, it.message.toString(), Toast.LENGTH_SHORT).show()
-                userDetails(fullName, email, password, "",phoneNumber)
+                userDetails(fullName, email, password, "", phoneNumber,dob)
             }
         }.addOnFailureListener {
             binding.progressBar.visibility = View.GONE
@@ -112,7 +144,14 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun userDetails(fullName: String, email: String, password: String, token: String,phoneNumber:String) {
+    private fun userDetails(
+        fullName: String,
+        email: String,
+        password: String,
+        token: String,
+        phoneNumber: String,
+        dob: String
+    ) {
         Log.d("LOGGER", "signUp: User Details")
         locationUtility.requestLocationUpdates { currentLocation ->
             userLat = currentLocation.latitude
@@ -127,6 +166,7 @@ class SignUpActivity : AppCompatActivity() {
                 "createdAt" to createdAt,
                 "isActive" to true,
                 "token" to token,
+                "dob" to dob,
                 "isPro" to false,
                 "subscriptionType" to "trail",
                 "userType" to "user",
@@ -156,7 +196,7 @@ class SignUpActivity : AppCompatActivity() {
                 .addOnSuccessListener {
                     binding.progressBar.visibility = View.GONE
                     UserSession.user = userModel
-                    val intent = Intent(this, DashBoardActivity::class.java)
+                    val intent = Intent(this, SubscriptionActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                     overridePendingTransition(
@@ -174,6 +214,9 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
+        overridePendingTransition(
+            androidx.appcompat.R.anim.abc_fade_in,
+            androidx.appcompat.R.anim.abc_fade_out
+        )
     }
 }
