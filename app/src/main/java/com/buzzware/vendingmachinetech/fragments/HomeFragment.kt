@@ -3,7 +3,6 @@ package com.buzzware.vendingmachinetech.fragments
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore.Video
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
@@ -12,11 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.buzzware.vendingmachinetech.R
-import com.buzzware.vendingmachinetech.adapters.CategoryAdapter
 import com.buzzware.vendingmachinetech.adapters.HomeCategoryAdapter
 import com.buzzware.vendingmachinetech.adapters.VideosAdapter
 import com.buzzware.vendingmachinetech.databinding.FragmentHomeBinding
@@ -89,19 +85,22 @@ class HomeFragment : Fragment() {
             binding.progressBar.visibility = View.GONE
             videosList.clear()
             value!!.forEach {
+                val categoryID = it.getString("categoryId") ?: ""
+                val postId = it.getString("postId") ?: ""
+
+                val videoDetails = it.toObject(Videos::class.java)
                 val video = Videos(
-                    title = it.getString("title") ?: "",
-                    categoryId = it.getString("categoryId") ?: "",
-                    description = it.getString("description") ?: "",
-                    publishDate = it.getLong("publishDate") ?: 0,
+                    title = videoDetails.title,
+                    categoryId = categoryID,
+                    description = videoDetails.description,
+                    date = videoDetails.date,
                     duration = it.getLong("duration") ?: 0,
                     userId = it.getString("userId") ?: "",
-                    postId = it.getString("postId") ?: "",
+                    postId = postId,
                     thumbnailImage = it.getString("thumbnailImage") ?: "",
                     videoLink = it.getString("videoLink") ?: "",
-                    isFavorite = it.getBoolean("isFavorite") ?: false // Set the retrieved boolean value
+                    favorites = videoDetails.favorites
                 )
-
                 videosList.add(video)
             }
             setAdapter(videosList)

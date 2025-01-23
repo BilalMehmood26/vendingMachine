@@ -15,5 +15,7 @@ interface ApiService {
 
     @POST("/widgetsforusa/checkcustidexistornot")
     @JvmSuppressWildcards
-    suspend fun createCustomer(@Body body: Map<String, Any>): Response<CustomerResponse>
+    fun createCustomer(@Body body: Map<String, Any>): Call<CustomerResponse>
+
+
 }

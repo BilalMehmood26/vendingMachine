@@ -16,7 +16,8 @@ data class User(
     var subscriptionType: String = "trail",
     var userType: String = "user",
     var createdAt: Long? = 0,
-    var favorites :ArrayList<String> = arrayListOf()
+    var favorites :ArrayList<String> = arrayListOf(),
+    var stripeaccount_id: String? = ""
 )
 
 

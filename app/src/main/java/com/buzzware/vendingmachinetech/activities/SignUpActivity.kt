@@ -15,13 +15,18 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.buzzware.vendingmachinetech.R
 import com.buzzware.vendingmachinetech.databinding.ActivitySignUpBinding
+import com.buzzware.vendingmachinetech.model.CustomerResponse
 import com.buzzware.vendingmachinetech.model.User
+import com.buzzware.vendingmachinetech.stripe.Controller
 import com.buzzware.vendingmachinetech.utils.LocationUtility
 import com.buzzware.vendingmachinetech.utils.UserSession
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.Calendar
 
 class SignUpActivity : AppCompatActivity() {
@@ -82,7 +87,6 @@ class SignUpActivity : AppCompatActivity() {
                 val datePickerDialog = DatePickerDialog(
                     this@SignUpActivity,
                     { _, selectedYear, selectedMonth, selectedDay ->
-                        // Update the TextView with the selected date
                         val date = "$selectedDay/${selectedMonth + 1}/$selectedYear"
                         dobTv.text = date
                     },
@@ -133,10 +137,28 @@ class SignUpActivity : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(email, password).addOnSuccessListener {
             FirebaseMessaging.getInstance().token.addOnSuccessListener {
                 Log.d("LOGGER", "signUp: Token$it")
-                userDetails(fullName, email, password, it, phoneNumber,dob)
+                //userDetails(fullName, email, password, it, phoneNumber, dob)
+                createCustomer(
+                    fullName,
+                    email,
+                    password,
+                    it,
+                    phoneNumber,
+                    dob,
+                    Firebase.auth.currentUser!!.uid
+                )
             }.addOnFailureListener {
                 Toast.makeText(this, it.message.toString(), Toast.LENGTH_SHORT).show()
-                userDetails(fullName, email, password, "", phoneNumber,dob)
+                //userDetails(fullName, email, password, "", phoneNumber, dob)
+                createCustomer(
+                    fullName,
+                    email,
+                    password,
+                    "",
+                    phoneNumber,
+                    dob,
+                    Firebase.auth.currentUser!!.uid
+                )
             }
         }.addOnFailureListener {
             binding.progressBar.visibility = View.GONE
@@ -150,7 +172,9 @@ class SignUpActivity : AppCompatActivity() {
         password: String,
         token: String,
         phoneNumber: String,
-        dob: String
+        dob: String,
+        custID: String,
+        accountID: String
     ) {
         Log.d("LOGGER", "signUp: User Details")
         locationUtility.requestLocationUpdates { currentLocation ->
@@ -174,7 +198,9 @@ class SignUpActivity : AppCompatActivity() {
                 "userLng" to userLng,
                 "image" to "",
                 "password" to password,
-                "phoneNumber" to phoneNumber
+                "phoneNumber" to phoneNumber,
+                "stripeCustid" to custID,
+                "stripeaccount_id" to accountID
             )
             var userModel = User(
                 id = Firebase.auth.currentUser!!.uid,
@@ -189,7 +215,9 @@ class SignUpActivity : AppCompatActivity() {
                 isPro = false,
                 subscriptionType = "trail",
                 createdAt = createdAt,
-                userType = "user"
+                userType = "user",
+                stripeCustid = custID,
+                stripeaccount_id = accountID
             )
 
             db.collection("Users").document(Firebase.auth.currentUser!!.uid).set(user)
@@ -210,6 +238,52 @@ class SignUpActivity : AppCompatActivity() {
                 }
             locationUtility.removeLocationUpdates()
         }
+    }
+
+    private fun createCustomer(
+        fullName: String,
+        email: String,
+        password: String,
+        token: String,
+        phoneNumber: String,
+        dob: String,
+        id: String
+    ) {
+        binding.progressBar.visibility = View.VISIBLE
+        val body = mapOf("email" to email, "userId" to id)
+        Controller.instance.createCustomer(body).enqueue(object : Callback<CustomerResponse> {
+            override fun onResponse(
+                call: Call<CustomerResponse>,
+                response: Response<CustomerResponse>
+            ) {
+                if (response.isSuccessful) {
+                    userDetails(
+                        fullName,
+                        email,
+                        password,
+                        token,
+                        phoneNumber,
+                        dob,
+                        response.body()!!.cust_id,
+                        response.body()!!.account_id
+                    )
+                } else {
+                    binding.progressBar.visibility = View.GONE
+                    Log.d("Logger", "onResponse: ${response.errorBody()!!.string()}")
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        response.errorBody()!!.string(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            override fun onFailure(call: Call<CustomerResponse>, t: Throwable) {
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(this@SignUpActivity, t.message.toString(), Toast.LENGTH_SHORT).show()
+
+            }
+        })
     }
 
     override fun onBackPressed() {

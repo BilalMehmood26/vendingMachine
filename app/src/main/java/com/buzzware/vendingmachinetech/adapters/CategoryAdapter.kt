@@ -32,8 +32,8 @@ class CategoryAdapter(val context: Context, private val list: ArrayList<Category
 
         holder.binding.apply {
             titleTv.text = item.title
-            if(item.image!!.isNotEmpty()){
-                Glide.with(context).load(item.image).into(categoryIv)
+            if(item.Image!!.isNotEmpty()){
+                Glide.with(context).load(item.Image).into(categoryIv)
             }
         }
         holder.binding.root.setOnClickListener {

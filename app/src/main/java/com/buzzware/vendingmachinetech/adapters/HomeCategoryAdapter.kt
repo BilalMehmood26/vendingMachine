@@ -31,8 +31,8 @@ class HomeCategoryAdapter(val context: Context, val list: ArrayList<Category>)
         val item = list[position]
         holder.binding.apply {
             titleTv.text = item.title
-            if(item.image!!.isNotEmpty()){
-                Glide.with(context).load(item.image).into(categoryIv)
+            if(item.Image!!.isNotEmpty()){
+                Glide.with(context).load(item.Image).into(categoryIv)
             }
         }
 

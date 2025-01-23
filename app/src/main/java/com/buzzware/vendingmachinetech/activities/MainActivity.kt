@@ -69,6 +69,7 @@ class MainActivity : BaseActivity() {
                     val user = task.toObject(User::class.java)
                     user!!.id = userId
                     UserSession.user = user
+                    UserSession.user.isPro = task.getBoolean("isPro")!!
                     if (user.isPro) {
                         val intent = Intent(this@MainActivity, DashBoardActivity::class.java)
                         intent.putExtra("user", "user")

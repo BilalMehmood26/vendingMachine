@@ -1,24 +1,26 @@
 package com.buzzware.vendingmachinetech.fragments
 
+import android.R
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.buzzware.vendingmachinetech.R
 import com.buzzware.vendingmachinetech.activities.CategoryDetailActivity
 import com.buzzware.vendingmachinetech.activities.EditActivity
-import com.buzzware.vendingmachinetech.activities.LoginActivity
 import com.buzzware.vendingmachinetech.activities.MainActivity
 import com.buzzware.vendingmachinetech.databinding.FragmentSettingBinding
 import com.buzzware.vendingmachinetech.utils.UserSession
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+
 
 class SettingFragment : Fragment() {
 
@@ -63,9 +65,18 @@ class SettingFragment : Fragment() {
         }
 
         binding.deleteLayout.setOnClickListener{
+            deleteDialog()
+        }
+    }
+
+    private fun deleteDialog() {
+        val builder = AlertDialog.Builder(fragmentContext)
+        builder.setTitle("Alert")
+        builder.setMessage("Are you sure to delete account!")
+
+        builder.setPositiveButton("Yes") { dialog, which ->
             binding.progressBar.visibility = View.VISIBLE
             val user = Firebase.auth.currentUser!!
-
             user.delete().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     binding.progressBar.visibility = View.GONE
@@ -73,6 +84,7 @@ class SettingFragment : Fragment() {
                 } else {
                     binding.progressBar.visibility = View.GONE
                     Log.d("Logger", "setListener: ${task.exception!!.message}")
+                    dialog.dismiss()
                     Toast.makeText(
                         fragmentContext,
                         "${task.exception!!.message}",
@@ -82,9 +94,13 @@ class SettingFragment : Fragment() {
             }
         }
 
+        builder.setNegativeButton("No") { dialog, which ->
+            dialog.dismiss()
+        }
 
-
+        builder.show()
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         fragmentContext = context

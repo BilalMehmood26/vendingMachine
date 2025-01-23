@@ -19,6 +19,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.buzzware.vendingmachinetech.R
 import com.buzzware.vendingmachinetech.databinding.ActivityLoginBinding
 import com.buzzware.vendingmachinetech.databinding.LayoutAlertForgotPasswordBinding
+import com.buzzware.vendingmachinetech.model.Subscription
 import com.buzzware.vendingmachinetech.model.User
 import com.buzzware.vendingmachinetech.utils.LocationUtility
 import com.buzzware.vendingmachinetech.utils.UserSession
@@ -41,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
     private var userLat = 0.0
     private var userLng = 0.0
     private var token = ""
+    private var endDate :Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,7 +92,7 @@ class LoginActivity : AppCompatActivity() {
                     updateToken(it, task.result.user!!.uid)
                 }.addOnFailureListener {
                     Toast.makeText(this, it.message.toString(), Toast.LENGTH_SHORT).show()
-                    getUserDetails(task.result.user!!.uid)
+                    getSubscription(task.result.user!!.uid)
                     Log.d("LOGGER", "token: ${it.message.toString()}")
                 }
             } else {
@@ -109,11 +111,11 @@ class LoginActivity : AppCompatActivity() {
         ) as Map<String, Any>
         db.collection("Users").document(userID).update(user)
             .addOnSuccessListener {
-                getUserDetails(userID)
+                getSubscription(userID)
             }.addOnFailureListener {
                 Toast.makeText(this@LoginActivity, it.message.toString(), Toast.LENGTH_SHORT).show()
                 Log.d("LOGGER", "token FailureListener: ${it.message.toString()}")
-                getUserDetails(userID)
+                getSubscription(userID)
             }
     }
 
@@ -125,13 +127,23 @@ class LoginActivity : AppCompatActivity() {
                 binding.progressBar.visibility = View.GONE
                 val user = response.toObject(User::class.java)
                 UserSession.user = user!!
-                val intent = Intent(this, DashBoardActivity::class.java)
-                startActivity(intent)
-                finish()
-                overridePendingTransition(
-                    androidx.appcompat.R.anim.abc_fade_in,
-                    androidx.appcompat.R.anim.abc_fade_out
-                )
+                if(subscriptionExpire().not()){
+                    val intent = Intent(this, DashBoardActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    overridePendingTransition(
+                        androidx.appcompat.R.anim.abc_fade_in,
+                        androidx.appcompat.R.anim.abc_fade_out
+                    )
+                }else{
+                    val intent = Intent(this, SubscriptionActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                    overridePendingTransition(
+                        androidx.appcompat.R.anim.abc_fade_in,
+                        androidx.appcompat.R.anim.abc_fade_out
+                    )
+                }
             }
         }.addOnFailureListener { error ->
             binding.progressBar.visibility = View.GONE
@@ -229,7 +241,29 @@ class LoginActivity : AppCompatActivity() {
     }
 */
 
+    private fun getSubscription(uid: String){
+        binding.progressBar.visibility = View.VISIBLE
+        db.collection("Subscriptions").document(Firebase.auth.currentUser!!.uid).get().addOnCompleteListener {
+            if(it.isSuccessful){
+                binding.progressBar.visibility = View.GONE
+                val subscription = it.result.toObject(Subscription::class.java)
+                endDate = subscription!!.endDate
+                getUserDetails(uid)
+            }else{
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(this, "${it.exception!!.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
+    private fun subscriptionExpire():Boolean{
+        val currentDate = System.currentTimeMillis()
+        if (currentDate <= endDate){
+            return false
+        }else{
+            return true
+        }
+    }
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(

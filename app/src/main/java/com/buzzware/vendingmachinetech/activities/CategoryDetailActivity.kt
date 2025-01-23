@@ -3,15 +3,11 @@ package com.buzzware.vendingmachinetech.activities
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.buzzware.vendingmachinetech.R
+import com.buzzware.vendingmachinetech.adapters.FavoriteAdapter
 import com.buzzware.vendingmachinetech.adapters.VideosAdapter
 import com.buzzware.vendingmachinetech.databinding.ActivityCategoryDetailBinding
 import com.buzzware.vendingmachinetech.model.Videos
@@ -78,6 +74,14 @@ class CategoryDetailActivity : BaseActivity() {
         binding.recyclerView.adapter = VideosAdapter(this, videoList)
     }
 
+    private fun setFavVideoAdapter(videoList: ArrayList<Videos>) {
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = FavoriteAdapter(this, videoList){
+            videoList.removeAt(it)
+            binding.recyclerView.adapter!!.notifyDataSetChanged()
+        }
+    }
+
 
     private fun getVideos() {
 
@@ -94,18 +98,18 @@ class CategoryDetailActivity : BaseActivity() {
             value!!.forEach {
                 val categoryID = it.getString("categoryId") ?: ""
                 val postId = it.getString("postId") ?: ""
-
+                val videoDetails = it.toObject(Videos::class.java)
                 val video = Videos(
-                    title = it.getString("title") ?: "",
+                    title = videoDetails.title,
                     categoryId = categoryID,
-                    description = it.getString("description") ?: "",
-                    publishDate = it.getLong("publishDate") ?: 0,
+                    description = videoDetails.description,
+                    date = videoDetails.date,
                     duration = it.getLong("duration") ?: 0,
                     userId = it.getString("userId") ?: "",
                     postId = postId,
                     thumbnailImage = it.getString("thumbnailImage") ?: "",
                     videoLink = it.getString("videoLink") ?: "",
-                    isFavorite = it.getBoolean("isFavorite") ?: false
+                    favorites = videoDetails.favorites
                 )
 
                 if (categoryID.equals(this.categoryID)) {
@@ -117,15 +121,9 @@ class CategoryDetailActivity : BaseActivity() {
                             favoriteList.add(video)
                         }
                     }
-                    setVideoAdapter(favoriteList)
+                    setFavVideoAdapter(favoriteList)
                 }
             }
-
-            if(title.equals("Favourites")){
-            }else{
-
-            }
-
         }
     }
 

@@ -10,18 +10,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.buzzware.vendingmachinetech.R
 import com.buzzware.vendingmachinetech.activities.VideoDetailActivity
-import com.buzzware.vendingmachinetech.databinding.ItemDesignCategoryLayoutBinding
 import com.buzzware.vendingmachinetech.databinding.ItemDesignVideoLayoutBinding
 import com.buzzware.vendingmachinetech.model.Videos
 import com.buzzware.vendingmachinetech.utils.UserSession
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class VideosAdapter(val context: Context, val list: ArrayList<Videos>) :
-    RecyclerView.Adapter<VideosAdapter.ViewHolder>() {
+class FavoriteAdapter(
+    val context: Context,
+    val list: ArrayList<Videos>,
+    private val itemRemove: (Int) -> Unit
+) :
+    RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -43,7 +45,6 @@ class VideosAdapter(val context: Context, val list: ArrayList<Videos>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         val item = list[position]
 
         holder.binding.apply {
@@ -61,20 +62,13 @@ class VideosAdapter(val context: Context, val list: ArrayList<Videos>) :
             }
 
             favouriteIv.setOnClickListener {
-                if(item.favorites!!.isNotEmpty()){
+                if (item.favorites!!.isNotEmpty()) {
                     item.favorites?.forEach {
                         if (it.equals(Firebase.auth.currentUser!!.uid)) {
-                            db.collection("Videos").document(item.postId)
-                                .update(
-                                    "favorites",
-                                    FieldValue.arrayRemove(Firebase.auth.currentUser!!.uid)
-                                )
-                            db.collection("Users").document(Firebase.auth.currentUser!!.uid)
-                                .update(
-                                    "favorites",
-                                    FieldValue.arrayRemove(item.postId)
-                                )
-                            UserSession.user.favorites.remove(item.postId)
+                            db.collection("Videos").document(item.postId).update("favorites", FieldValue.arrayRemove(Firebase.auth.currentUser!!.uid))
+                            db.collection("Users").document(Firebase.auth.currentUser!!.uid).update("favorites", FieldValue.arrayRemove(item.postId))
+                            itemRemove.invoke(position)
+                            UserSession.user.favorites = UserSession.user.favorites.filterNot { favorite -> favorite == item.postId }as ArrayList<String>
                             favouriteIv.setImageResource(R.drawable.ic_heart_post)
                         } else {
                             db.collection("Videos").document(item.postId)
@@ -87,11 +81,13 @@ class VideosAdapter(val context: Context, val list: ArrayList<Videos>) :
                                     "favorites",
                                     FieldValue.arrayUnion(item.postId)
                                 )
-                            UserSession.user.favorites.add(item.postId)
+                            if (!UserSession.user.favorites.contains(item.postId)) {
+                                UserSession.user.favorites.add(item.postId)
+                            }
                             favouriteIv.setImageResource(R.drawable.ic_heart_post_fill)
                         }
                     }
-                }else{
+                } else {
                     db.collection("Videos").document(item.postId)
                         .update(
                             "favorites",
@@ -102,7 +98,9 @@ class VideosAdapter(val context: Context, val list: ArrayList<Videos>) :
                             "favorites",
                             FieldValue.arrayUnion(item.postId)
                         )
-                    UserSession.user.favorites.add(item.postId)
+                    if (!UserSession.user.favorites.contains(item.postId)) {
+                        UserSession.user.favorites.add(item.postId)
+                    }
                     favouriteIv.setImageResource(R.drawable.ic_heart_post_fill)
                 }
             }
@@ -121,7 +119,6 @@ class VideosAdapter(val context: Context, val list: ArrayList<Videos>) :
             }
 
         }
-
     }
 
     private fun convertMillisecondsToTimeFormat(seconds: Long): String {
@@ -137,4 +134,5 @@ class VideosAdapter(val context: Context, val list: ArrayList<Videos>) :
             String.format("00:%02d", remainingSeconds)
         }
     }
+
 }
