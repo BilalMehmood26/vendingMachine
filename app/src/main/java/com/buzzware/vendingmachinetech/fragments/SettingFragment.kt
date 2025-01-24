@@ -19,6 +19,7 @@ import com.buzzware.vendingmachinetech.activities.MainActivity
 import com.buzzware.vendingmachinetech.databinding.FragmentSettingBinding
 import com.buzzware.vendingmachinetech.utils.UserSession
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
@@ -77,19 +78,27 @@ class SettingFragment : Fragment() {
         builder.setPositiveButton("Yes") { dialog, which ->
             binding.progressBar.visibility = View.VISIBLE
             val user = Firebase.auth.currentUser!!
-            user.delete().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+            Firebase.firestore.collection("Users").document(user.uid).delete().addOnCompleteListener {
+                if(it.isSuccessful){
+                    user.delete().addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            binding.progressBar.visibility = View.GONE
+                            requireActivity().startActivity(Intent(fragmentContext,MainActivity::class.java))
+                            requireActivity().finish()
+                        } else {
+                            binding.progressBar.visibility = View.GONE
+                            Log.d("Logger", "setListener: ${task.exception!!.message}")
+                            dialog.dismiss()
+                            Toast.makeText(
+                                fragmentContext,
+                                "${task.exception!!.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }else{
                     binding.progressBar.visibility = View.GONE
-                    requireActivity().finish()
-                } else {
-                    binding.progressBar.visibility = View.GONE
-                    Log.d("Logger", "setListener: ${task.exception!!.message}")
-                    dialog.dismiss()
-                    Toast.makeText(
-                        fragmentContext,
-                        "${task.exception!!.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(fragmentContext, "${it.exception!!.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }

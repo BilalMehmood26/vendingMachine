@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "904974557339",
+    "firebase_url": "https://vending-machines-da703-default-rtdb.firebaseio.com",
     "project_id": "vending-machines-da703",
     "storage_bucket": "vending-machines-da703.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.buzzware.vendingmachinetech"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "904974557339-u02v7eedpv5p0ae50hogr6pr5rjnvm2l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.buzzware.vendingmachinetech",
+            "certificate_hash": "0a977bc46187c47b4c3b29eadcb2508124319f29"
+          }
+        },
+        {
+          "client_id": "904974557339-odhbtb7hm3sj46l0mbgp0jv3684o99m1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDhcZwhF-864BWuCX2f5NSV411MkpHkSUs"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "904974557339-odhbtb7hm3sj46l0mbgp0jv3684o99m1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -80,11 +80,11 @@ class SubscriptionActivity : AppCompatActivity() {
     }
 
     private fun hitPaymentApi() {
-
+        val totalAmount = (subscription.toLong() * 100)
         val response = mapOf(
             "customerid" to UserSession.user.stripeCustid,
-            "currency" to "usd",
-            "amount" to subscription
+            "currency" to "eur",
+            "amount" to totalAmount.toString()
         )
 
         binding.progressBar.visibility = View.VISIBLE
@@ -187,6 +187,7 @@ class SubscriptionActivity : AppCompatActivity() {
                                 androidx.appcompat.R.anim.abc_fade_in,
                                 androidx.appcompat.R.anim.abc_fade_out
                             )
+                            finish()
                         }
                     }
                 } else {
@@ -196,13 +197,13 @@ class SubscriptionActivity : AppCompatActivity() {
             }
     }
 
-    fun millisecondsFromNowToOneYear(): Long {
+    private fun millisecondsFromNowToOneYear(): Long {
         val now = System.currentTimeMillis()
         val oneYearInMillis = TimeUnit.DAYS.toMillis(365)
         return now + oneYearInMillis
     }
 
-    fun millisecondsFromNowToOneMonth(): Long {
+    private fun millisecondsFromNowToOneMonth(): Long {
         val now = System.currentTimeMillis()
         val oneMonthInMillis = TimeUnit.DAYS.toMillis(30)
         return now + oneMonthInMillis

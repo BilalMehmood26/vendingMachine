@@ -110,8 +110,6 @@ class EditActivity : BaseActivity() {
                             UserSession.user.userName = userName
                             UserSession.user.email = email
                             UserSession.user.password = password
-                            Toast.makeText(this@EditActivity, "Profile Updated", Toast.LENGTH_SHORT)
-                                .show()
                             if (password.isNotEmpty()) {
                                 updatePassword(password)
                             }
@@ -131,7 +129,7 @@ class EditActivity : BaseActivity() {
             }
         } else {
             val userUpdate = hashMapOf(
-                "firstName" to userName,
+                "userName" to userName,
                 "password" to password,
                 "email" to email,
             ) as Map<String, Any>

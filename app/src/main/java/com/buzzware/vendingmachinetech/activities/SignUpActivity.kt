@@ -118,11 +118,6 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
         binding.backIV.setOnClickListener { onBackPressed() }
-        /*
-                binding.getStartBtn.setOnClickListener {
-                    //startActivity(Intent(this, SubscriptionActivity::class.java))
-                    overridePendingTransition(androidx.appcompat.R.anim.abc_fade_in, androidx.appcompat.R.anim.abc_fade_out)
-                }*/
 
     }
 
@@ -202,6 +197,7 @@ class SignUpActivity : AppCompatActivity() {
                 "stripeCustid" to custID,
                 "stripeaccount_id" to accountID
             )
+
             var userModel = User(
                 id = Firebase.auth.currentUser!!.uid,
                 email = email,
@@ -269,6 +265,8 @@ class SignUpActivity : AppCompatActivity() {
                     )
                 } else {
                     binding.progressBar.visibility = View.GONE
+                    Firebase.auth.signOut()
+                    Firebase.auth.currentUser!!.delete()
                     Log.d("Logger", "onResponse: ${response.errorBody()!!.string()}")
                     Toast.makeText(
                         this@SignUpActivity,
@@ -280,6 +278,8 @@ class SignUpActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<CustomerResponse>, t: Throwable) {
                 binding.progressBar.visibility = View.GONE
+                Firebase.auth.currentUser!!.delete()
+                Firebase.auth.signOut()
                 Toast.makeText(this@SignUpActivity, t.message.toString(), Toast.LENGTH_SHORT).show()
 
             }
